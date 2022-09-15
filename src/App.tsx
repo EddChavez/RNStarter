@@ -10,7 +10,7 @@
 
 import React from 'react';
 
-import MainNavigator from './navigation/MainNavigator';
+import MainNavigator from '@src/navigation/MainNavigator';
 
 const App = () => <MainNavigator />;
 

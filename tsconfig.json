@@ -24,8 +24,8 @@
       "@pages/*": [
         "./src/components/pages/*"
       ],
-      "src/*": [
-        "src/*"
+      "@src/*": [
+        "./src/*"
       ]
     } /* Skip type checking all .d.ts files. */
   },
