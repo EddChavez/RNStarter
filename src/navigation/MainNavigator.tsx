@@ -3,6 +3,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {Text, View} from 'react-native';
+import {useTranslation} from 'react-i18next';
 
 const Drawer = createDrawerNavigator();
 
@@ -31,6 +32,7 @@ const APISampleScreen = () => {
 };
 
 const MainNavigator = () => {
+  const {t} = useTranslation();
   return (
     <SafeAreaProvider>
       <NavigationContainer>
@@ -38,7 +40,7 @@ const MainNavigator = () => {
           <Drawer.Screen
             name="Home"
             options={{
-              title: "t('screens.home.title')",
+              title: t('screens.home.title'),
               //   drawerIcon: ({size, color}) => (
               //     <Icon name="home" size={size} color={color} />
               //   ),
@@ -48,7 +50,7 @@ const MainNavigator = () => {
           <Drawer.Screen
             name="OAuth2Sample"
             options={{
-              title: "t('screens.oauth2sample.title')",
+              title: t('screens.oauth2sample.title'),
               //   drawerIcon: ({size, color}) => (
               //     <Icon name="security" size={size} color={color} />
               //   ),
@@ -58,7 +60,7 @@ const MainNavigator = () => {
           <Drawer.Screen
             name="APISample"
             options={{
-              title: "t('screens.apisample.title')",
+              title: t('screens.apisample.title'),
               //   drawerIcon: ({size, color}) => (
               //     <Icon name="telescope" size={size} color={color} />
               //   ),

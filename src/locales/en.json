@@ -1,0 +1,17 @@
+{
+  "translation": {
+    "screens": {
+      "home": {
+        "title": "Baufest Starter"
+      },
+      "oauth2sample": {
+        "title": "OAuth2 Example",
+        "loginOauth": "Login with OAuth2",
+        "accessToken": "Access Token"
+      },
+      "apisample": {
+        "title": "NASA Images Example"
+      }
+    }
+  }
+}
