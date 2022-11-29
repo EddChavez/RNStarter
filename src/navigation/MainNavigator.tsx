@@ -2,35 +2,13 @@ import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {createDrawerNavigator} from '@react-navigation/drawer';
-import {Text, View} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import HomeScreen from '@pages/HomeScreen';
+import APISampleScreen from '@pages/APISampleScreen';
+import SingInScreen from '@pages/SingInScreen';
 
 const Drawer = createDrawerNavigator();
-
-const HomeScreen = () => {
-  return (
-    <View>
-      <Text>Home</Text>
-    </View>
-  );
-};
-
-const OAuth2SampleScreen = () => {
-  return (
-    <View>
-      <Text>OAuth2Sample</Text>
-    </View>
-  );
-};
-
-const APISampleScreen = () => {
-  return (
-    <View>
-      <Text>APISample</Text>
-    </View>
-  );
-};
 
 const MainNavigator = () => {
   const {t} = useTranslation();
@@ -38,6 +16,16 @@ const MainNavigator = () => {
     <SafeAreaProvider>
       <NavigationContainer>
         <Drawer.Navigator>
+          <Drawer.Screen
+            name="OAuth2Sample"
+            options={{
+              title: t('screens.oauth2sample.title'),
+              drawerIcon: ({size, color}) => (
+                <Icon name="security" size={size} color={color} />
+              ),
+            }}
+            component={SingInScreen}
+          />
           <Drawer.Screen
             name="Home"
             options={{
@@ -47,16 +35,6 @@ const MainNavigator = () => {
               ),
             }}
             component={HomeScreen}
-          />
-          <Drawer.Screen
-            name="OAuth2Sample"
-            options={{
-              title: t('screens.oauth2sample.title'),
-              drawerIcon: ({size, color}) => (
-                <Icon name="security" size={size} color={color} />
-              ),
-            }}
-            component={OAuth2SampleScreen}
           />
           <Drawer.Screen
             name="APISample"

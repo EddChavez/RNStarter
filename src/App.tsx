@@ -9,9 +9,17 @@
  */
 
 import React from 'react';
-
+import {Provider} from 'react-redux';
+import store, {persistor} from './store';
 import MainNavigator from '@src/navigation/MainNavigator';
+import {PersistGate} from 'redux-persist/integration/react';
 
-const App = () => <MainNavigator />;
+const App = () => (
+  <Provider store={store}>
+    <PersistGate loading={null} persistor={persistor}>
+      <MainNavigator />
+    </PersistGate>
+  </Provider>
+);
 
 export default App;
