@@ -1,15 +1,17 @@
-import Poster from '@atoms/Poster';
 import React from 'react';
-import { Text, View } from 'react-native';
-import moment from 'moment';
+import Poster from '@atoms/Poster';
+import { TouchableOpacity, View } from 'react-native';
+import MovieDescription from '@atoms/MovieDescription';
+import { useNavigation } from '@react-navigation/core';
+import { MovieDescriptionType } from '@src/types/models/movieDescriptionInterface';
 
 interface Props {
-  posterPath: string;
-  title: string;
-  releaseDate: Date;
+  movieDescription: MovieDescriptionType;
 }
 
-const CardMovie: React.FC<Props> = ({ posterPath, title, releaseDate }) => {
+const CardMovie: React.FC<Props> = ({ movieDescription }) => {
+  const navigation = useNavigation();
+
   return (
     <View
       style={{
@@ -21,12 +23,21 @@ const CardMovie: React.FC<Props> = ({ posterPath, title, releaseDate }) => {
         overflow: 'hidden',
       }}
     >
-      <Poster posterPath={posterPath} />
-      <View style={{}}>
-        <Text>votos</Text>
-        <Text style={{}}>{title}</Text>
-        <Text style={{}}>{moment(releaseDate).format('MMM DD, YYYY')}</Text>
-      </View>
+      <TouchableOpacity
+        style={{ flex: 1 }}
+        onPress={() => {
+          navigation.navigate('MovieDetailsScreen', {
+            movieDescription: movieDescription,
+          });
+        }}
+      >
+        <Poster posterPath={movieDescription.poster_path} />
+        <MovieDescription
+          title={movieDescription.title}
+          releaseDate={new Date(movieDescription.release_date)}
+          voteAverage={movieDescription.vote_average}
+        />
+      </TouchableOpacity>
     </View>
   );
 };

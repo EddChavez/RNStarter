@@ -1,5 +1,5 @@
 import i18n from 'i18next';
-import {initReactI18next} from 'react-i18next';
+import { initReactI18next } from 'react-i18next';
 import RNLanguageDetector from '@os-team/i18next-react-native-language-detector';
 import en from './src/locales/en.json';
 import es from './src/locales/es.json';
