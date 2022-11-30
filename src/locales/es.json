@@ -2,15 +2,10 @@
   "translation": {
     "screens": {
       "home": {
-        "title": "Baufest Starter"
+        "title": "Movies Inc"
       },
-      "oauth2sample": {
-        "title": "Pantalla de ejemplo de OAuth2",
-        "loginOauth": "Ingresar con OAuth2",
-        "accessToken": "Token de acceso"
-      },
-      "apisample": {
-        "title": "Pantalla de ejemplo de API"
+      "favorites": {
+        "title": "Mis Favoritos"
       }
     }
   }
