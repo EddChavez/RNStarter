@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, Text, View } from 'react-native';
+import { FlatList, Text, TouchableOpacity, View } from 'react-native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@src/navigation/MainNavigator';
 import { RouteProp } from '@react-navigation/core';
@@ -12,13 +12,14 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { useGetSimilarMovies } from '@src/hooks/useGetSimilarMovies';
 import { Rating } from 'react-native-ratings';
 import { useGetAccountStates } from '@src/hooks/useGetAccountStates';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 interface Props {
   navigation: NativeStackNavigationProp<RootStackParamList>;
   route: RouteProp<RootStackParamList, 'MovieDetailsScreen'>;
 }
 
-const MovieDetailsScreen: React.FC<Props> = ({ route }) => {
+const MovieDetailsScreen: React.FC<Props> = ({ route, navigation }) => {
   const { id, poster_path, title, release_date, vote_average } =
     route.params.movieDescription;
   const { movieDetails, isLoadingDetail } = useGetMovieDetails({ id });
@@ -27,7 +28,10 @@ const MovieDetailsScreen: React.FC<Props> = ({ route }) => {
 
   const { similarMovies } = useGetSimilarMovies({ id });
 
-  const { accountStates, rateMovie } = useGetAccountStates({ id });
+  const { accountStates, rateMovie, fetchingRate, toggleFavoriteMovie } =
+    useGetAccountStates({
+      id,
+    });
 
   return (
     <View style={{ flex: 1, backgroundColor: 'white' }}>
@@ -42,18 +46,44 @@ const MovieDetailsScreen: React.FC<Props> = ({ route }) => {
         >
           <Poster posterPath={poster_path} />
         </View>
-        <MovieDescription
-          title={title}
-          releaseDate={new Date(release_date)}
-          voteAverage={vote_average}
-          isViewDetails
-        />
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-around',
+            paddingRight: 20,
+          }}
+        >
+          <MovieDescription
+            title={title}
+            releaseDate={new Date(release_date)}
+            voteAverage={vote_average}
+            isViewDetails
+          />
+          <TouchableOpacity
+            onPress={() =>
+              toggleFavoriteMovie({
+                movieId: id,
+                isFavorite: !accountStates?.favorite,
+              })
+            }
+            // disabled={true}
+          >
+            <Icon
+              name={
+                accountStates?.favorite ? 'cards-heart' : 'cards-heart-outline'
+              }
+              size={50}
+              color="red"
+            />
+          </TouchableOpacity>
+        </View>
         <Rating
           startingValue={accountStates?.rated?.value || 0}
           ratingCount={10}
           imageSize={25}
           jumpValue={1}
-          // readonly
+          readonly={fetchingRate}
           style={{ paddingBottom: 15 }}
           onFinishRating={(value: number) =>
             rateMovie({ movieId: id, rateMovie: value })
@@ -70,7 +100,12 @@ const MovieDetailsScreen: React.FC<Props> = ({ route }) => {
           data={similarMovies}
           keyExtractor={(item: any, index) => item.id.toString() + index}
           renderItem={({ item }) => (
-            <View
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate('MovieDetailsScreen', {
+                  movieDescription: item,
+                })
+              }
               style={{
                 height: 200,
                 width: 130,
@@ -80,7 +115,7 @@ const MovieDetailsScreen: React.FC<Props> = ({ route }) => {
               }}
             >
               <Poster posterPath={item.poster_path} />
-            </View>
+            </TouchableOpacity>
           )}
           horizontal={true}
           showsHorizontalScrollIndicator={false}

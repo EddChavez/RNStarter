@@ -9,9 +9,14 @@
  */
 
 import React from 'react';
+import { ToastProvider } from 'react-native-toast-notifications';
 
 import MainNavigator from '@src/navigation/MainNavigator';
 
-const App = () => <MainNavigator />;
+const App = () => (
+  <ToastProvider>
+    <MainNavigator />
+  </ToastProvider>
+);
 
 export default App;

@@ -16,7 +16,7 @@ export const useGetCastShow = ({ id }: GetCast) => {
 
   useEffect(() => {
     getCastMovie();
-  }, []);
+  }, [id]);
 
   return {
     isLoadingCast: isFetching,

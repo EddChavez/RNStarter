@@ -17,7 +17,7 @@ export const useGetMovieDetails = ({ id }: GetDetails) => {
 
   useEffect(() => {
     getMovieDetails();
-  }, []);
+  }, [id]);
 
   return {
     isLoadingDetail: isFetching,

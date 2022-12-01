@@ -58,10 +58,10 @@ const styles = StyleSheet.create({
     paddingTop: 30,
   },
   containerViewDetails: {
+    flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     padding: 15,
-    justifyContent: 'center',
   },
   progressContainer: {
     backgroundColor: 'white',
@@ -72,15 +72,14 @@ const styles = StyleSheet.create({
     top: -20,
     left: 8,
   },
-  progressContainerViewDetails: {
-    backgroundColor: 'red',
-  },
+  progressContainerViewDetails: {},
   progressTextStyle: {
     color: 'black',
     fontSize: 11,
     fontWeight: 'bold',
   },
   descriptionContainer: {
+    flex: 1,
     marginLeft: 15,
   },
   titleStyle: {

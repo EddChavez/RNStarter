@@ -16,7 +16,7 @@ export const useGetSimilarMovies = ({ id }: GetDetails) => {
 
   useEffect(() => {
     getSimilarMovies();
-  }, []);
+  }, [id]);
 
   return {
     isLoadingSimilarMovies: isFetching,
