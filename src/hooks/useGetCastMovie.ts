@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import useGetData from '../api/useGetData';
 
 interface GetCast {
@@ -5,10 +6,20 @@ interface GetCast {
 }
 
 export const useGetCastShow = ({ id }: GetCast) => {
-  const { data, isFetching } = useGetData(`movie/${id}/credits`);
+  const [cast, setCast] = useState([]);
+  const { getData, isFetching } = useGetData();
+
+  const getCastMovie = async () => {
+    const { cast } = await getData({ path: `movie/${id}/credits` });
+    setCast(cast);
+  };
+
+  useEffect(() => {
+    getCastMovie();
+  }, []);
 
   return {
     isLoadingCast: isFetching,
-    cast: data?.cast || [],
+    cast,
   };
 };

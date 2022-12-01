@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import useGetData from '../api/useGetData';
 
 interface GetDetails {
@@ -5,10 +6,20 @@ interface GetDetails {
 }
 
 export const useGetSimilarMovies = ({ id }: GetDetails) => {
-  const { data, isFetching } = useGetData(`movie/${id}/similar`);
+  const [similarMovies, setSimilarMovies] = useState([]);
+  const { getData, isFetching } = useGetData();
+
+  const getSimilarMovies = async () => {
+    const { results } = await getData({ path: `movie/${id}/similar` });
+    setSimilarMovies(results);
+  };
+
+  useEffect(() => {
+    getSimilarMovies();
+  }, []);
 
   return {
     isLoadingSimilarMovies: isFetching,
-    similarMovies: data || [],
+    similarMovies,
   };
 };

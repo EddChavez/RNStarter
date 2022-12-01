@@ -7,16 +7,22 @@ import { MovieDescriptionType } from '@src/types/models/movieDescriptionInterfac
 
 interface Props {
   movieDescription: MovieDescriptionType;
+  height?: number;
+  width?: number;
 }
 
-const CardMovie: React.FC<Props> = ({ movieDescription }) => {
+const CardMovie: React.FC<Props> = ({
+  movieDescription,
+  height = 380,
+  width = '45%',
+}) => {
   const navigation = useNavigation();
 
   return (
     <View
       style={{
-        height: 380,
-        width: '45%',
+        height,
+        width,
         backgroundColor: 'white',
         marginVertical: 5,
         borderRadius: 20,

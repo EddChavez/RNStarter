@@ -2,16 +2,18 @@ import { useState } from 'react';
 import API from './movieDB';
 import { ApiConfig } from '@src/types/models/api/apiConfig';
 
-const useGetData = (): {
+const usePostData = (): {
   isFetching: boolean;
-  getData: (config: ApiConfig) => Promise<any>;
+  postData: (config: ApiConfig) => Promise<any>;
 } => {
   const [isFetching, setIsFetching] = useState(false);
-
-  const getData = async ({ path, params }: ApiConfig): Promise<any> => {
+  const postData = async ({ path, data, params }: ApiConfig): Promise<any> => {
     try {
       setIsFetching(true);
-      const response = await API.get(path, { params });
+      const response = await API.post(path, data, {
+        params,
+      });
+
       return { ...response.data };
     } catch (err) {
       console.error(err);
@@ -21,10 +23,7 @@ const useGetData = (): {
     }
   };
 
-  return {
-    isFetching,
-    getData,
-  };
+  return { isFetching, postData };
 };
 
-export default useGetData;
+export default usePostData;

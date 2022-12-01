@@ -6,7 +6,7 @@ import { FlatList } from 'react-native';
 import { MovieDescriptionType } from '@src/types/models/movieDescriptionInterface';
 
 const HomeScreen = () => {
-  const { nowPlayingMovies, isLoadingNowPlayingMovies } = useNowPlayingMovies();
+  const { nowPlayingMovies } = useNowPlayingMovies();
 
   const renderItem = ({ item }: { item: MovieDescriptionType }) => (
     <CardMovie movieDescription={item} />

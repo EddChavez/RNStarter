@@ -6,7 +6,7 @@ import { MovieFull } from '@src/types/models/movieInterface';
 import { CastItem } from '@atoms/CastItem';
 
 interface Props {
-  movieFull: MovieFull;
+  movieFull: MovieFull | undefined;
   cast: Cast[];
   isLoadingDetail?: boolean;
   isLoadingCast?: boolean;
