@@ -6,6 +6,9 @@
       },
       "favorites": {
         "title": "My Favorites"
+      },
+      "details": {
+        "title": "Movie Detail"
       }
     }
   }

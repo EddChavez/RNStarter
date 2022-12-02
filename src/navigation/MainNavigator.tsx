@@ -29,7 +29,7 @@ const MainNavigator = () => {
       <Drawer.Screen
         name="HomeScreen"
         options={{
-          title: t('screens.home.title'),
+          title: t('screens.home.title') || '',
           drawerIcon: ({ size, color }) => (
             <Icon name="movie" size={size} color={color} />
           ),
@@ -39,7 +39,7 @@ const MainNavigator = () => {
       <Drawer.Screen
         name="FavoritesScreen"
         options={{
-          title: t('screens.favorites.title'),
+          title: t('screens.favorites.title') || '',
           drawerIcon: ({ size, color }) => (
             <Icon name="heart" size={size} color={color} />
           ),
@@ -58,7 +58,13 @@ const MainNavigator = () => {
             component={RootNavigator}
             options={{ headerShown: false }}
           />
-          <Screen name="MovieDetailsScreen" component={MovieDetailsScreen} />
+          <Screen
+            options={{
+              title: t('screens.details.title') || '',
+            }}
+            name="MovieDetailsScreen"
+            component={MovieDetailsScreen}
+          />
         </Navigator>
       </NavigationContainer>
     </SafeAreaProvider>
