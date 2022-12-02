@@ -4,6 +4,7 @@ import { Spinner } from '@atoms/Spinner';
 import { Cast } from '@src/types/models/creditsInterface';
 import { MovieFull } from '@src/types/models/movieInterface';
 import { CastItem } from '@atoms/CastItem';
+import Carousel from '@organisms/Carousel';
 
 interface Props {
   movieFull: MovieFull | undefined;
@@ -41,17 +42,11 @@ export const MovieDetails: React.FC<Props> = ({
         <Spinner />
       ) : (
         cast.length > 0 && (
-          <View style={castingStyles.container}>
-            <Text style={castingStyles.actorsHeader}>Actores</Text>
-            <FlatList
-              data={cast}
-              keyExtractor={(item, index) => item.id.toString() + index}
-              renderItem={({ item }) => <CastItem actor={item} />}
-              horizontal={true}
-              showsHorizontalScrollIndicator={false}
-              style={castingStyles.actorsList}
-            />
-          </View>
+          <Carousel
+            data={cast}
+            renderItem={({ item }) => <CastItem actor={item} />}
+            title="Actores"
+          />
         )
       )}
     </>

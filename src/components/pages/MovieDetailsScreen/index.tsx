@@ -1,5 +1,11 @@
 import React from 'react';
-import { FlatList, Text, TouchableOpacity, View } from 'react-native';
+import {
+  FlatList,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@src/navigation/MainNavigator';
 import { RouteProp } from '@react-navigation/core';
@@ -13,6 +19,8 @@ import { useGetSimilarMovies } from '@src/hooks/useGetSimilarMovies';
 import { Rating } from 'react-native-ratings';
 import { useGetAccountStates } from '@src/hooks/useGetAccountStates';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import ActionButton from '@atoms/ActionButton';
+import Carousel from '@organisms/Carousel';
 
 interface Props {
   navigation: NativeStackNavigationProp<RootStackParamList>;
@@ -34,16 +42,9 @@ const MovieDetailsScreen: React.FC<Props> = ({ route, navigation }) => {
     });
 
   return (
-    <View style={{ flex: 1, backgroundColor: 'white' }}>
+    <View style={styles.container}>
       <ScrollView>
-        <View
-          style={{
-            height: 500,
-            margin: 20,
-            borderRadius: 20,
-            overflow: 'scroll',
-          }}
-        >
+        <View style={styles.posterContainer}>
           <Poster posterPath={poster_path} />
         </View>
         <View
@@ -60,23 +61,25 @@ const MovieDetailsScreen: React.FC<Props> = ({ route, navigation }) => {
             voteAverage={vote_average}
             isViewDetails
           />
-          <TouchableOpacity
+          <ActionButton
             onPress={() =>
               toggleFavoriteMovie({
                 movieId: id,
                 isFavorite: !accountStates?.favorite,
               })
             }
-            // disabled={true}
-          >
-            <Icon
-              name={
-                accountStates?.favorite ? 'cards-heart' : 'cards-heart-outline'
-              }
-              size={50}
-              color="red"
-            />
-          </TouchableOpacity>
+            icon={
+              <Icon
+                name={
+                  accountStates?.favorite
+                    ? 'cards-heart'
+                    : 'cards-heart-outline'
+                }
+                size={50}
+                color="red"
+              />
+            }
+          />
         </View>
         <Rating
           startingValue={accountStates?.rated?.value || 0}
@@ -95,10 +98,9 @@ const MovieDetailsScreen: React.FC<Props> = ({ route, navigation }) => {
           isLoadingCast={isLoadingCast}
           isLoadingDetail={isLoadingDetail}
         />
-        <Text>Peliculas similares</Text>
-        <FlatList
+        <Carousel
           data={similarMovies}
-          keyExtractor={(item: any, index) => item.id.toString() + index}
+          title="Peliculas similares"
           renderItem={({ item }) => (
             <TouchableOpacity
               onPress={() =>
@@ -114,16 +116,26 @@ const MovieDetailsScreen: React.FC<Props> = ({ route, navigation }) => {
                 overflow: 'scroll',
               }}
             >
-              <Poster posterPath={item.poster_path} />
+              <Poster posterPath={item?.poster_path} />
             </TouchableOpacity>
           )}
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
-          style={{ marginLeft: 20, marginBottom: 20 }}
         />
       </ScrollView>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'white',
+  },
+  posterContainer: {
+    height: 500,
+    margin: 20,
+    borderRadius: 20,
+    overflow: 'scroll',
+  },
+});
 
 export default MovieDetailsScreen;
