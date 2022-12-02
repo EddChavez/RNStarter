@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  FlatList,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@src/navigation/MainNavigator';
 import { RouteProp } from '@react-navigation/core';
@@ -21,6 +15,7 @@ import { useGetAccountStates } from '@src/hooks/useGetAccountStates';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import ActionButton from '@atoms/ActionButton';
 import Carousel from '@organisms/Carousel';
+import PosterLink from '@molecules/PosterLink';
 
 interface Props {
   navigation: NativeStackNavigationProp<RootStackParamList>;
@@ -47,14 +42,7 @@ const MovieDetailsScreen: React.FC<Props> = ({ route, navigation }) => {
         <View style={styles.posterContainer}>
           <Poster posterPath={poster_path} />
         </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-around',
-            paddingRight: 20,
-          }}
-        >
+        <View style={styles.descriptionContent}>
           <MovieDescription
             title={title}
             releaseDate={new Date(release_date)}
@@ -102,22 +90,14 @@ const MovieDetailsScreen: React.FC<Props> = ({ route, navigation }) => {
           data={similarMovies}
           title="Peliculas similares"
           renderItem={({ item }) => (
-            <TouchableOpacity
+            <PosterLink
               onPress={() =>
                 navigation.navigate('MovieDetailsScreen', {
                   movieDescription: item,
                 })
               }
-              style={{
-                height: 200,
-                width: 130,
-                borderRadius: 10,
-                margin: 5,
-                overflow: 'scroll',
-              }}
-            >
-              <Poster posterPath={item?.poster_path} />
-            </TouchableOpacity>
+              posterPath={item?.poster_path}
+            />
           )}
         />
       </ScrollView>
@@ -135,6 +115,12 @@ const styles = StyleSheet.create({
     margin: 20,
     borderRadius: 20,
     overflow: 'scroll',
+  },
+  descriptionContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    paddingRight: 20,
   },
 });
 
